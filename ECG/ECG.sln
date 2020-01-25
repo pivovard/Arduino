@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECGapp", "ECGapp\ECGapp.csproj", "{EA6D7251-1D3A-4EF7-BEF8-64CE337DA480}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECGcomConsole", "ECGcomConsole\ECGcomConsole.csproj", "{6AFFB868-D9CD-49D6-B509-6286782E765E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECGcom", "ECGcom\ECGcom.csproj", "{67C1B68B-F7FE-4A68-9BE7-0E5895711EB0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA6D7251-1D3A-4EF7-BEF8-64CE337DA480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6D7251-1D3A-4EF7-BEF8-64CE337DA480}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6D7251-1D3A-4EF7-BEF8-64CE337DA480}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6D7251-1D3A-4EF7-BEF8-64CE337DA480}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AFFB868-D9CD-49D6-B509-6286782E765E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AFFB868-D9CD-49D6-B509-6286782E765E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AFFB868-D9CD-49D6-B509-6286782E765E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AFFB868-D9CD-49D6-B509-6286782E765E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C1B68B-F7FE-4A68-9BE7-0E5895711EB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C1B68B-F7FE-4A68-9BE7-0E5895711EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C1B68B-F7FE-4A68-9BE7-0E5895711EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C1B68B-F7FE-4A68-9BE7-0E5895711EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E1A8441-3737-41C6-955E-142FD76891B5}
+	EndGlobalSection
+EndGlobal

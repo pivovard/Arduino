@@ -1,0 +1,20 @@
+Acceleration:
+    sample 10ms
+    V = V0 + At
+    
+ECG:
+    sample 1ms
+    read data SPI
+    QRS detection -> heart beat
+    
+Comunication:
+    TCP/IP (WiFi server) or UDP (WiFiUDP)
+    display with ip
+    Client handshake > Arduino
+    Arduino starts send ECG and speed
+    UDP broadcast???
+    
+App:
+    WPF
+    OxyPlot lib
+    
