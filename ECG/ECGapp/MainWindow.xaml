@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:ECGapp"
         xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
         mc:Ignorable="d"
-        Title="ECG" Height="570.312" Width="800">
+        Title="ECG" Height="750" Width="800" Closing="Window_Closing">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
     <Grid>
         <!-- The OxyPlot control is binding to a PlotModel in the MainViewModel -->
-        <oxy:PlotView x:Name="graphECG" Model="{Binding ECGModel}" Margin="0,38,9.6,119.8" />
-        <TextBox x:Name="tbIP" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="49,7,0,0"/>
-        <Label Content="IP:" HorizontalAlignment="Left" Margin="12,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.982,0.371"/>
-        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="266,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="637,7,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lbStatus" Content="Disconnected" HorizontalAlignment="Left" Margin="682,7,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tbIP" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="48,16,0,0" Text="192.168.0.102"/>
+        <Label Content="IP:" HorizontalAlignment="Left" Margin="12,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.982,0.371"/>
+        <Button x:Name="btnConnect" Content="Connect" HorizontalAlignment="Left" Margin="266,19,0,0" VerticalAlignment="Top" Width="75" Click="BtnConnect_Click"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="637,16,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbStatus" Content="Disconnected" HorizontalAlignment="Left" Margin="682,16,0,0" VerticalAlignment="Top" Background="Red"/>
+        <oxy:PlotView x:Name="graphECG" Model="{Binding ECGPlot}" Height="300" Margin="0,47,9.6,373.8" />
+        <oxy:PlotView x:Name="graphSpeed" Model="{Binding SpeedPlot}" Height="300" Margin="0,352,9.6,68.8" />
     </Grid>
 </Window>

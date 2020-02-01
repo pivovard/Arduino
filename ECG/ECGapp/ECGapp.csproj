@@ -104,5 +104,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ECGcom\ECGcom.csproj">
+      <Project>{67c1b68b-f7fe-4a68-9be7-0e5895711eb0}</Project>
+      <Name>ECGcom</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

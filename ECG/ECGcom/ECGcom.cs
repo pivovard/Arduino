@@ -13,49 +13,66 @@ namespace ECGcom
         TcpClient tcpClient { get; set; }
         NetworkStream stream { get; set; }
 
-        public Queue<Item> buffer { get; private set; }
         public bool status = false;
+
+        static Random r = new Random();
+        static uint i = 100;
 
         public ECGcom(string ip, int port = 666)
         {
+            Console.WriteLine("Connecting to {ip}:{port}...");
             tcpClient = new TcpClient();
             tcpClient.Connect(ip, port);
-            if (!(status = tcpClient.Connected)) return;
 
+            if (!(status = tcpClient.Connected))
+            {
+                Console.WriteLine("Not connected.");
+                return;
+            }
+
+            Console.WriteLine("Connected.");
             stream = tcpClient.GetStream();
-            buffer = new Queue<Item>();
+
+            Byte[] data = Encoding.ASCII.GetBytes("Ahoj\n");
+            stream.Write(data, 0, data.Length);
         }
 
+        ~ECGcom()
+        {
+            //stream.Close();
+            //tcpClient.Close();
+        }
+        byte[] data = new byte[12];
         public Item Receive()
         {
-            byte[] data = new byte[256];
             stream.Read(data, 0, data.Length);
             string msg = Encoding.ASCII.GetString(data);
-            Console.WriteLine("Received: " + msg);
-            return Parse(msg);
+            Console.WriteLine($"Received: {msg}");
+
+            uint t = System.BitConverter.ToUInt32(data, 0);
+            float e = System.BitConverter.ToSingle(data, 4);
+            float s = System.BitConverter.ToSingle(data, 8);
+
+            Console.WriteLine($"Received: {t} {e} {s}");
+            return new Item(t, e, s);
         }
 
-        private Item Parse(string msg)
+        public static Item ReceiveDummy()
         {
-            string[] s = msg.Split(';');
-            return new Item(int.Parse(s[1]), double.Parse(s[2]), double.Parse(s[3]));
-        }
-
-        public Item GetItem()
-        {
-            return (buffer.Count > 0) ? buffer.Dequeue() : null;
+            i++;
+            return new Item(i, (float)r.NextDouble(), (float)r.NextDouble());
         }
     }
 
     public class Item
     {
-        public int time;
-        public double ecg;
-        public double speed;
+        public float time;
+        public float ecg;
+        public float speed;
 
-        public Item(int time, double ecg, double speed)
+        public Item(uint time, float ecg, float speed)
         {
-            this.time = time;
+            this.time = time / 1000.0f; //ms->s
             this.ecg = ecg;
             this.speed = speed;
         }

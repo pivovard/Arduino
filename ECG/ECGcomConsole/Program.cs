@@ -11,7 +11,7 @@ namespace ECGcom
 {
     class Program
     {
-        static string ip = "192.168.43.19";
+        static string ip = "192.168.0.102";
         static int port = 666;
 
         static UdpClient udpClient { get; set; }
@@ -21,7 +21,7 @@ namespace ECGcom
         {
             //runUDP();
             runTCP();
-            
+
 
             Console.ReadKey();
         }
@@ -45,21 +45,24 @@ namespace ECGcom
         public static void runTCP()
         {
             tcpClient = new TcpClient();
-            tcpClient.Connect(ip, 80);
+            tcpClient.Connect(ip, 666);
             var stream = tcpClient.GetStream();
 
-            Byte[] data = Encoding.ASCII.GetBytes("Ahoj\n??\n\n");
+            Byte[] data = Encoding.ASCII.GetBytes("Ahoj\n");
             stream.Write(data, 0, data.Length);
 
-            //stream.Read(data, 0, 6);
-            //string msg = Encoding.ASCII.GetString(data);
-
-            //while (stream.CanRead && stream.DataAvailable)
+            data = new byte[12];
+            while(true)
             {
                 Console.WriteLine("Reading");
                 stream.Read(data, 0, data.Length);
-                string msg = Encoding.ASCII.GetString(data);
-                Console.WriteLine(msg);
+                //string msg = Encoding.ASCII.GetString(data);
+                float num = System.BitConverter.ToSingle(data, 0);
+                Console.WriteLine(num);
+                num = System.BitConverter.ToSingle(data, 4);
+                Console.WriteLine(num);
+                num = System.BitConverter.ToSingle(data, 8);
+                Console.WriteLine(num);
             }
 
             stream.Close();

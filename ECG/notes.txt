@@ -18,3 +18,9 @@ App:
     WPF
     OxyPlot lib
     
+    
+3D printer:
+    2 heads
+    classic mode
+    draw mode - folow image, based on color use right head
+    
