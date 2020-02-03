@@ -3,16 +3,15 @@ Acceleration:
     V = V0 + At
     
 ECG:
-    sample 1ms
+    sample 10ms
     read data SPI
     QRS detection -> heart beat
     
 Comunication:
-    TCP/IP (WiFi server) or UDP (WiFiUDP)
+    TCP/IP (WiFi server)
     display with ip
     Client handshake > Arduino
-    Arduino starts send ECG and speed
-    UDP broadcast???
+    Arduino starts send ECG and speed=
     
 App:
     WPF
@@ -23,4 +22,6 @@ App:
     2 heads
     classic mode
     draw mode - folow image, based on color use right head
+    
+Lock with face recognition (and RFID)
     
