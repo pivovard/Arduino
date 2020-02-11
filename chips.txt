@@ -1,4 +1,6 @@
 74HC595     shift register
+74HC00N     NAND gate 4x
 MCP4821     D/A converter
 LM158/LM258/LM385   OpAmp
 LM380       audio power amplifier
+ESP8266     WiFi module
