@@ -5,3 +5,6 @@
 
 //#define SECRET_SSID "Redmi"
 //#define SECRET_PASS "smartfridge"
+
+//#define SECRET_SSID "HAMKvisitor"
+//#define SECRET_PASS "hamkvisitor"

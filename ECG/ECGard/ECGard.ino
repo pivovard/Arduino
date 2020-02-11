@@ -22,16 +22,18 @@ void setup() {
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	unsigned long m = millis();
+	if (Serial.available() > 0) {
+		unsigned long m = millis();
 
-	if (m - previousMillis >= samplingPeriod)
-	{
-		previousMillis = m;
-		data[0] = *((float *)&m); //assign value without cast to float
+		if (m - previousMillis >= samplingPeriod)
+		{
+			previousMillis = m;
+			data[0] = *((float *)&m); //assign value without cast to float
 
-		data[1] = random();
-		data[2] = random();
+			data[1] = Serial.read();
+			data[2] = random();
 
-		server->send(data, 3);
-	}	
+			server->send(data, 3);
+		}
+	}
 }
