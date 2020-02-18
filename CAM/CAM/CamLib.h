@@ -113,7 +113,7 @@ void initial();
 
 void send(CAM_CMD cmd, uint8_t p1 = 0, uint8_t p2 = 0, uint8_t p3 = 0, uint8_t p4 = 0);
 long recv(CAM_CMD cmd, uint8_t option = 0);
-long recvData(long len);
+uint8_t* recvJPEG(long len);
 void getJPEG();
 void getRAW();
 
@@ -148,7 +148,8 @@ inline void setIdleTime(uint8_t seconds = 15)
 inline void setPackageSize(uint16_t size = 64)
 {
 	//send(CMD_SET_PACKSIZE, 0x08, size & 0xFF, ((size >> 8) & 0xFF) ? (_packageSize = size) : 0);
-	send(CMD_SET_PACKSIZE, 0x08, size & 0xFF, ((size >> 8) & 0xFF) ? (size) : 0);
+	//send(CMD_SET_PACKSIZE, 0x08, size & 0xFF, ((size >> 8) & 0xFF) ? (size) : 0);
+	send(CMD_SET_PACKSIZE, 0x08, size & 0xFF, (size >> 8) & 0xFF);
 	recv(CAM_CMD::CMD_ACK, CAM_CMD::CMD_SET_PACKSIZE);
 }
 

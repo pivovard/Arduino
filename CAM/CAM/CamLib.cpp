@@ -1,12 +1,12 @@
 #include "CamLib.h"
 
 const int _resetPin = 7;
-const int _packageSize = 512;
+const int _packageSize = 64; //512
 
 void start()
 {
 	Serial.begin(9600);
-	while (!Serial);
+	//while (!Serial);
 
 	Serial.println("Initializing camera...");
 	Serial1.begin(9600);
@@ -50,9 +50,10 @@ void hardReset()
 void initial()
 {
 	Serial.println("\nSetting.");
+	setBaudRate();
 	setImageFormat(COMP_JPEG, R640x480); //JPEG max resolution
 	setPackageSize(_packageSize);
-	setBaudRate();
+	//setImageFormat(RAW_16BIT_RGB565, R160x120);
 }
 
 void send(CAM_CMD cmd, uint8_t p1, uint8_t p2, uint8_t p3, uint8_t p4)
@@ -72,7 +73,7 @@ long recv(CAM_CMD cmd, uint8_t option)
 		Serial.println("Received: " + String(buff[1], HEX) + " " + String(buff[2], HEX) + " " + String(buff[3], HEX) + " " + String(buff[4], HEX) + " " + String(buff[5], HEX));
 		if (buff[1] == cmd && (buff[2] == option || option == DONT_CARE)) {
 			Serial.println("ACK");
-			return buff[3] | buff[4] << 8 | buff[5] << 16 | 0x1000000;
+			return buff[3] | buff[4] << 8 | buff[5] << 16; // LSB // | 0x1000000;
 		}
 		else if (buff[1] == CMD_NAK) {
 			Serial.println("Recv error!");
@@ -84,16 +85,36 @@ long recv(CAM_CMD cmd, uint8_t option)
 	return 0;
 }
 
-long recvData(long len)
+uint8_t* recvJPEG(long len)
 {
 	uint8_t buff[_packageSize];
+	uint8_t* img = new uint8_t(len);
+	uint16_t id = 0;
+	uint16_t size = 0;
+	int count = len / (_packageSize - 6) + 1;
 
-	for (; len > _packageSize; len -= _packageSize) {
+	Serial.println("Receiving image(" + String(count) + " pkgs):");
+	for (int i =0; i < count; i++) {
 		Serial1.readBytes((char*)buff, sizeof(buff));
-	}
-	Serial1.readBytes((char*)buff, len);
 
-	return 0;
+		id = buff[0] | buff[1] << 8;
+		size = buff[2] | buff[3] << 8;
+
+		Serial.println("Package " + String(id) + ", size " + String(size));
+		//for(int j = 0; j < size; j++)
+		//{
+		//	img[i*(_packageSize - 6) + j] = buff[j + 4];
+		//	Serial.print(buff[j+4]);
+		//	Serial.print(" ");
+		//}
+		//Serial.println();
+
+		send(CMD_ACK, 0, 0, buff[0], buff[1]);
+	}
+
+	Serial.println("Image received.");
+
+	return img;
 }
 
 void getJPEG()
@@ -101,29 +122,53 @@ void getJPEG()
 	Serial.println("\nGet JPEG");
 	//takeSnapshot(SNAP_JPEG);
 	//send(CMD_GET_PICTURE, TYPE_SNAPSHOT);
+
 	send(CMD_GET_PICTURE, TYPE_JPEG);
+	delay(200);
+	if (!recv(CMD_ACK, CMD_GET_PICTURE)) return; //GET_PICTURE doesn't reply ACK but sends DATA instantly
+
+	Serial.println("Receiving data:");
+	uint8_t* img;
+	long len = 0;
+
+	if (len = recv(CMD_DATA, TYPE_JPEG)) {
+		Serial.println("Length is " + String(len));
+		send(CMD_ACK);
+		img = recvJPEG(len);
+	}
+	else {
+		Serial.println("Data receive failed!");
+		return;
+	}
+
+	//for (int j = 0; j < len; j++)
+	//{
+	//	Serial.print(img[j]);
+	//	Serial.print(" ");
+	//}
+}
+
+void getRAW()
+{
+	//takeSnapshot(SNAP_RAW);
+	//send(CMD_GET_PICTURE, TYPE_SNAPSHOT);
+	
+	send(CMD_GET_PICTURE, TYPE_RAW);
 	delay(200);
 	if (!recv(CMD_ACK, CMD_GET_PICTURE)) return; //GET_PICTURE doesn't reply ACK but sends DATA instantly
 
 	Serial.println("Receiving data:");
 
 	long len = 0;
-	if (len = recv(CMD_DATA, TYPE_JPEG)) {
+	if (len = recv(CMD_DATA, TYPE_RAW)) {
 		Serial.println("Length is " + String(len));
 		send(CMD_ACK);
-		recvData(len);
+		//recvJPEG(len);
 	}
 	else {
 		Serial.println("Data receive failed!");
 		return;
 	}
-}
-
-void getRAW()
-{
-	takeSnapshot(SNAP_RAW);
-	send(CMD_GET_PICTURE, TYPE_SNAPSHOT);
-	if (!recv(CMD_GET_PICTURE)) return;
 }
 
 
