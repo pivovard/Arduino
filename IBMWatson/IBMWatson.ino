@@ -97,6 +97,10 @@ for(int i = 0; i < numSamples; i++)
 
 void loop() {
  MQTTc.loop(); // Cut for testing without Watson
+ MQTTc.publish("iot-2/evt/SoundTwo/fmt/json", "{\"Sound level sensors\":\"Sounds from field, too\",\"SoundMean\":\"" + String(soundLevel)+"\", \"SoundStreight\": \"" + String(sound8bit)+"\"}");
+ delay(500);
+ return;
+ 
  // opening and closing SPI communication for reading MIC3
  if(millis() - lastSampleMillis > 1000/numSamples)
  {
@@ -186,6 +190,7 @@ void connect()
  {
  Serial.print(".");
  delay(3000);
+ break;
  }
  Serial.println("\nconnected!");
 }

@@ -117,7 +117,7 @@ uint8_t* recvJPEG(long len)
 	return img;
 }
 
-void getJPEG()
+uint8_t* getJPEG()
 {
 	Serial.println("\nGet JPEG");
 	//takeSnapshot(SNAP_JPEG);
@@ -125,7 +125,7 @@ void getJPEG()
 
 	send(CMD_GET_PICTURE, TYPE_JPEG);
 	delay(200);
-	if (!recv(CMD_ACK, CMD_GET_PICTURE)) return; //GET_PICTURE doesn't reply ACK but sends DATA instantly
+	if (!recv(CMD_ACK, CMD_GET_PICTURE)) return nullptr; //GET_PICTURE doesn't reply ACK but sends DATA instantly
 
 	Serial.println("Receiving data:");
 	uint8_t* img;
@@ -138,7 +138,7 @@ void getJPEG()
 	}
 	else {
 		Serial.println("Data receive failed!");
-		return;
+		return nullptr;
 	}
 
 	//for (int j = 0; j < len; j++)
@@ -146,6 +146,8 @@ void getJPEG()
 	//	Serial.print(img[j]);
 	//	Serial.print(" ");
 	//}
+
+	return img;
 }
 
 void getRAW()
