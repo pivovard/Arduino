@@ -24,8 +24,11 @@ Loop timing redone
 #include <MQTTClient.h> // The Gaehwiler mqtt library
 
 // WLAN
-char ssid[] = "HAMKvisitor"; // your network SSID (name)
-char pass[] = "hamkvisitor"; // your network password (use for WPA)
+//char ssid[] = "HAMKvisitor"; // your network SSID (name)
+//char pass[] = "hamkvisitor"; // your network password (use for WPA)
+
+char ssid[] = "TW-EAV510-BREAAA"; // your network SSID (name)
+char pass[] = "56410098"; // your network password (use for WPA)
 
 // IBM Watson
 // Your organization and device needs to be registered in IBM Watson IoT Platform.

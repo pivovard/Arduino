@@ -6,7 +6,6 @@ const int _packageSize = 64; //512
 void start()
 {
 	Serial.begin(9600);
-	//while (!Serial);
 
 	Serial.println("Initializing camera...");
 	Serial1.begin(9600);
@@ -117,37 +116,31 @@ uint8_t* recvJPEG(long len)
 	return img;
 }
 
-uint8_t* getJPEG()
+long getJPEG()
 {
 	Serial.println("\nGet JPEG");
 	//takeSnapshot(SNAP_JPEG);
 	//send(CMD_GET_PICTURE, TYPE_SNAPSHOT);
 
 	send(CMD_GET_PICTURE, TYPE_JPEG);
-	delay(200);
-	if (!recv(CMD_ACK, CMD_GET_PICTURE)) return nullptr; //GET_PICTURE doesn't reply ACK but sends DATA instantly
+	delay(100);
+	if (!recv(CMD_ACK, CMD_GET_PICTURE)) return -1;
 
 	Serial.println("Receiving data:");
-	uint8_t* img;
+	//uint8_t* img;
 	long len = 0;
 
 	if (len = recv(CMD_DATA, TYPE_JPEG)) {
 		Serial.println("Length is " + String(len));
 		send(CMD_ACK);
-		img = recvJPEG(len);
+		//img = recvJPEG(len);
 	}
 	else {
 		Serial.println("Data receive failed!");
-		return nullptr;
+		return -1;
 	}
 
-	//for (int j = 0; j < len; j++)
-	//{
-	//	Serial.print(img[j]);
-	//	Serial.print(" ");
-	//}
-
-	return img;
+	return len;
 }
 
 void getRAW()
