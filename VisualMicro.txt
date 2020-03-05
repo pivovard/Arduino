@@ -1,0 +1,11 @@
+Computer\HKEY_CURRENT_USER\Software\Visual Micro\Options\System
+
+Hardware Id
+DJV4Z-Q4EFC-CHNZ8-GL7HF-2P4AA
+
+Serial Number
+3d55603c-82df-4b29-98f3-c30ad528c8d0
+
+
+License Key
+CEVWH-UTS6K-VEL3C-ECXSD-GCGS3
