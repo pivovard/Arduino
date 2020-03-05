@@ -36,7 +36,7 @@ void setup() {
 	
 	SPI.begin();
 	SPI.setBitOrder(MSBFIRST);
-	SPI.setDataMode(SPI_MODE1);
+	SPI.setDataMode(SPI_MODE0);
 
 	SPI.setClockDivider(SPI_CLOCK_DIV8);
 	
@@ -60,14 +60,12 @@ void setup() {
 	unsigned long data1 = (unsigned long)(SPI_temp_32b[1]);
 	data1 = data1 << 16;
 	unsigned long data2 = (unsigned long)(SPI_temp_32b[2]);
-	data2 = data2 >> 6;
-	data2 = data2 & 0x03;
+	data2 = data2 << 8;
 
 	data = (unsigned long)(data0 | data1 | data2);
-	ecgdata = (signed long)(data);
 
-	Serial.println(data);
-
+	Serial.println(data, BIN);
+	delay(100);
 }
 
 // 32KHz clock using timer1
@@ -78,35 +76,52 @@ void timerIsr()
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-
+  delay(100);
 	unsigned long m = micros();
 
-	if (m - prev >= samplingPeriod)
+	if (true)
 	{
-		prev = m;
+		prev = m;		
 
-		Serial.println("Reading");
+		//MAX30003_Reg_Read(ECG_FIFO);
+		//unsigned long data00 = (unsigned long)(SPI_temp_32b[0]);
+		//data00 = data00 << 16;
+		//unsigned long data01 = (unsigned long)(SPI_temp_32b[1]);
+		//data01 = data01 << 8;
+		//unsigned long data02 = (unsigned long)(SPI_temp_32b[2]);
+		////data02 = data02 << 8;
+		//unsigned long dummy = 1;
+		//dummy = dummy << 25;
+		//data = (unsigned long)(data00 | data01 | data02 | dummy);
+		//Serial.println(data, BIN);
+		//return;
 		
-
-		MAX30003_Reg_Read(ECG_FIFO);
-		Serial.println(SPI_temp_32b[0]);
-		Serial.println(SPI_temp_32b[1]);
-		Serial.println(SPI_temp_32b[2]);
-		return;
 		MAX30003_Reg_Read(ECG_FIFO);
 		unsigned long data0 = (unsigned long)(SPI_temp_32b[0]);
 		data0 = data0 << 24;
 		unsigned long data1 = (unsigned long)(SPI_temp_32b[1]);
 		data1 = data1 << 16;
 		unsigned long data2 = (unsigned long)(SPI_temp_32b[2]);
+
+		uint8_t etag = (data2 >> 3) & 7;
+
 		data2 = data2 >> 6;
 		data2 = data2 & 0x03;
+		data2 = data2 << 14;
 
 		data = (unsigned long)(data0 | data1 | data2);
 		ecgdata = (signed long)(data);
 
-		Serial.println(data);
-		Serial.println(ecgdata);
+		Serial.println(etag, BIN);
+
+		if(etag == 0 || etag == 2) Serial.println(ecgdata);
+		if(etag == 1 || etag == 3) Serial.println(0);
+		if (etag == 7) max30003_synch();
+
+		//Serial.println(data);
+		//Serial.println(ecgdata);
+		return;
+
 
 		MAX30003_Reg_Read(RTOR);
 		

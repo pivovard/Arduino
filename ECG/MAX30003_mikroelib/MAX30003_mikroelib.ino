@@ -62,6 +62,9 @@ void timerIsr()
 void loop() {
 	ecg3_getECG(&ecgData);
 	//ecg3_checkStatus(ecgData);
-
+	//Serial.println(ecgData, BIN);
+	int32_t data = (int32_t)(ecgData<<8);
+	Serial.println(data);
 	//plotECG();
+	delay(100);
 }

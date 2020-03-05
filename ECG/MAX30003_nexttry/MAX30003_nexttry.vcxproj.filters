@@ -24,15 +24,18 @@
     <ClInclude Include="__vm\.MAX30003_nexttry.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MAX30003.h">
+    <ClInclude Include="Timer5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Timer5.h">
+    <ClInclude Include="MAX30003.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Timer5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MAX30003.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
