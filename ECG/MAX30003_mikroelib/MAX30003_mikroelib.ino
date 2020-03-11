@@ -23,21 +23,14 @@ void setup() {
 	Serial.begin(9600);
 	while (!Serial); // wait for serial port to connect. Needed for native USB port only
 
-	pinMode(CLK_PIN, OUTPUT);
-	//pinMode(CS_PIN, OUTPUT);
-	//digitalWrite(CS_PIN, HIGH);
-
-	//SPI.begin();
-	//SPI.setBitOrder(MSBFIRST);
-	//SPI.setDataMode(SPI_MODE1);
-	//SPI.setClockDivider(SPI_CLOCK_DIV8);
 	initSPI();
 
+	//external clock
+	/*pinMode(CLK_PIN, OUTPUT);
 	//Start CLK timer
 	MyTimer5.begin(16);              // set a timer of length 100000 microseconds (or 0.1 sec - or 10Hz => the led will blink 5 times, 5 cycles of on-and-off, per second)
-	//MyTimer5.begin(30.517578125);
 	MyTimer5.attachInterrupt(timerIsr); // attach the service routine here
-	MyTimer5.start();
+	MyTimer5.start();*/
 
 	delay(100);
 
@@ -62,9 +55,5 @@ void timerIsr()
 void loop() {
 	ecg3_getECG(&ecgData);
 	//ecg3_checkStatus(ecgData);
-	//Serial.println(ecgData, BIN);
-	int32_t data = (int32_t)(ecgData<<8);
-	Serial.println(data);
-	//plotECG();
-	delay(100);
+	Serial.println(ecgData);
 }
