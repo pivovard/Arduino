@@ -35,6 +35,8 @@ public:
 	void send(String msg);
 	void send(float data);
 	void send(float* data, int num);
+	void send(uint32_t data);
+	void send(uint32_t* data, int num);
 	String recv();
 
 	

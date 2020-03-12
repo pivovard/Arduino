@@ -19,7 +19,7 @@ WifiServerExp::WifiServerExp(int port)
 void WifiServerExp::init() {
 	if (!Serial) {
 		Serial.begin(9600);
-		while (!Serial); // wait for serial port to connect. Needed for native USB port only
+		//while (!Serial); // wait for serial port to connect. Needed for native USB port only
 	}
 	if (WiFi.status() == WL_NO_SHIELD) {
 		Serial.println("WiFi shield not present");
@@ -162,6 +162,27 @@ void WifiServerExp::send(float* data, int num)
 		Serial.println("Sending...");
 		byte *b = (byte *)data;
 		size_t n = client.write(b, num*sizeof(float));
+		//Serial.println(n);
+	}
+}
+
+void WifiServerExp::send(uint32_t data)
+{
+	WiFiClient client = server->available();
+	if (client && client.connected()) {
+		Serial.println("Sending...");
+		byte *b = (byte *)&data;
+		client.write(b, sizeof(uint32_t));
+	}
+}
+
+void WifiServerExp::send(uint32_t* data, int num)
+{
+	WiFiClient client = server->available();
+	if (client && client.connected()) {
+		Serial.println("Sending...");
+		byte *b = (byte *)data;
+		size_t n = client.write(b, num * sizeof(uint32_t));
 		//Serial.println(n);
 	}
 }

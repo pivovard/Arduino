@@ -27,8 +27,14 @@
     <ClInclude Include="WifiServerExp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MAX30003.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MAX30003.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="WifiServerExp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

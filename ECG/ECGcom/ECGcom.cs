@@ -47,11 +47,11 @@ namespace ECGcom
         {
             stream.Read(data, 0, data.Length);
             string msg = Encoding.ASCII.GetString(data);
-            Console.WriteLine($"Received: {msg}");
+            //Console.WriteLine($"Received: {msg}");
 
             uint t = System.BitConverter.ToUInt32(data, 0);
-            float e = System.BitConverter.ToSingle(data, 4);
-            float s = System.BitConverter.ToSingle(data, 8);
+            uint e = System.BitConverter.ToUInt32(data, 4);
+            uint s = System.BitConverter.ToUInt32(data, 8);
 
             Console.WriteLine($"Received: {t} {e} {s}");
             return new Item(t, e, s);
@@ -60,17 +60,17 @@ namespace ECGcom
         public static Item ReceiveDummy()
         {
             i++;
-            return new Item(i, (float)r.NextDouble(), (float)r.NextDouble());
+            return new Item(i, (UInt32)r.Next(), (UInt32)r.Next());
         }
     }
 
     public class Item
     {
         public float time;
-        public float ecg;
-        public float speed;
+        public uint ecg;
+        public uint speed;
 
-        public Item(uint time, float ecg, float speed)
+        public Item(uint time, uint ecg, uint speed)
         {
             this.time = time / 1000.0f; //ms->s
             this.ecg = ecg;

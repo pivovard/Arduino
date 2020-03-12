@@ -17,8 +17,8 @@ namespace ECGapp
         
         public PlotModel ECGPlot { get; private set; } = new PlotModel { Title = "ECG" };
         private LineSeries ecg_series = new LineSeries { Title = "ECG", MarkerType = MarkerType.None, Color = OxyColors.Red };
-        public PlotModel SpeedPlot { get; private set; } = new PlotModel { Title = "Speed" };
-        private LineSeries speed_series = new LineSeries { Title = "Speed", MarkerType = MarkerType.None };
+        public PlotModel SpeedPlot { get; private set; } = new PlotModel { Title = "Heart rate" };
+        private LineSeries speed_series = new LineSeries { Title = "HR", MarkerType = MarkerType.None };
 
         private const int N = 100;
 
@@ -30,7 +30,7 @@ namespace ECGapp
 
             SpeedPlot.Series.Add(speed_series);
             SpeedPlot.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "time [s]" });
-            SpeedPlot.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "speed [m/s]" });
+            SpeedPlot.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "[bpm]" });
         }
 
         public void Add(ECGcom.Item item)
@@ -41,7 +41,7 @@ namespace ECGapp
         public void Add(float time, float ecg, float speed)
         {
             ecg_series.Points.Add(new DataPoint(time, ecg));
-            speed_series.Points.Add(new DataPoint(time, ecg));
+            speed_series.Points.Add(new DataPoint(time, speed));
             if (ecg_series.Points.Count > N)
             {
                 ecg_series.Points.RemoveAt(0);
