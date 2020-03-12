@@ -33,11 +33,17 @@ namespace ECGapp
             SpeedPlot.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "[bpm]" });
         }
 
+        /// <summary>
+        /// Add new point to the plot.
+        /// </summary>
         public void Add(ECGcom.Item item)
         {
             Add(item.time, item.ecg, item.speed);
         }
 
+        /// <summary>
+        /// Add new point to the plot.
+        /// </summary>
         public void Add(float time, float ecg, float speed)
         {
             ecg_series.Points.Add(new DataPoint(time, ecg));

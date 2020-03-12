@@ -27,7 +27,6 @@ uint32_t data[3];
 uint16_t hr;
 uint16_t rr;
 
-//f = 100Hz -> T =  0.01
 const int samplingPeriod = 100; //ms 
 unsigned long previousMillis = 0;
 
@@ -42,9 +41,11 @@ void setup() {
 		MQTTc.connect(client_id, user_id, authToken);
 	}
 	else {
-		server = new WifiServerExp(666);
+		//start TCP server
+		server = new WifiServerExp(333);
 	}
 
+	//init ECG 3 module
 	initSPI();
 
 	ecg3_swReset();

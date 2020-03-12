@@ -30,8 +30,6 @@ namespace ECGapp
         public MainWindow()
         {
             InitializeComponent();
-
-            
         }
 
         private void BtnConnect_Click(object sender, RoutedEventArgs e)
@@ -58,6 +56,7 @@ namespace ECGapp
 
                 var model = this.DataContext as ViewModel;
 
+                //start new thread that receives data from server
                 th = new Thread(delegate ()
                 {
                     while (true)

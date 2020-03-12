@@ -136,6 +136,7 @@ void WifiServerExp::printWiFiStatus() {
 	Serial.println(" dBm");
 }
 
+/* Send string message */
 void WifiServerExp::send(String msg)
 {
 	WiFiClient client = server->available();
@@ -145,6 +146,7 @@ void WifiServerExp::send(String msg)
 	}
 }
 
+/* Send float value */
 void WifiServerExp::send(float data)
 {
 	WiFiClient client = server->available();
@@ -155,6 +157,7 @@ void WifiServerExp::send(float data)
 	}
 }
 
+/* Send multiple float values */
 void WifiServerExp::send(float* data, int num)
 {
 	WiFiClient client = server->available();
@@ -166,6 +169,7 @@ void WifiServerExp::send(float* data, int num)
 	}
 }
 
+/* Send uint value */
 void WifiServerExp::send(uint32_t data)
 {
 	WiFiClient client = server->available();
@@ -176,6 +180,7 @@ void WifiServerExp::send(uint32_t data)
 	}
 }
 
+/* Send multiple uint values */
 void WifiServerExp::send(uint32_t* data, int num)
 {
 	WiFiClient client = server->available();
@@ -187,6 +192,7 @@ void WifiServerExp::send(uint32_t* data, int num)
 	}
 }
 
+/* Receive string message */
 String WifiServerExp::recv()
 {
 	WiFiClient client = server->available();

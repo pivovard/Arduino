@@ -13,12 +13,15 @@ namespace ECGcom
         TcpClient tcpClient { get; set; }
         NetworkStream stream { get; set; }
 
+        byte[] data = new byte[12];
+
         public bool status = false;
 
         static Random r = new Random();
         static uint i = 100;
 
-        public ECGcom(string ip, int port = 666)
+
+        public ECGcom(string ip, int port = 333)
         {
             Console.WriteLine("Connecting to {ip}:{port}...");
             tcpClient = new TcpClient();
@@ -42,7 +45,11 @@ namespace ECGcom
             //stream.Close();
             //tcpClient.Close();
         }
-        byte[] data = new byte[12];
+        
+        /// <summary>
+        /// Receive data from server and cast them to uint.
+        /// </summary>
+        /// <returns></returns>
         public Item Receive()
         {
             stream.Read(data, 0, data.Length);
@@ -57,6 +64,10 @@ namespace ECGcom
             return new Item(t, e, s);
         }
 
+        /// <summary>
+        /// Create random dummy data/
+        /// </summary>
+        /// <returns></returns>
         public static Item ReceiveDummy()
         {
             i++;
