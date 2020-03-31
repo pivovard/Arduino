@@ -24,8 +24,11 @@ MQTTClient MQTTc(256);
 //char ssid[] = "HAMKvisitor"; // your network SSID (name)
 //char pass[] = "hamkvisitor"; // your network password (use for WPA)
 
-char ssid[] = "TW-EAV510-BREAAA"; // your network SSID (name)
-char pass[] = "56410098"; // your network password (use for WPA)
+//char ssid[] = "TW-EAV510-BREAAA"; // your network SSID (name)
+//char pass[] = "56410098"; // your network password (use for WPA)
+
+char ssid[] = "UPC3421232"; // your network SSID (name)
+char pass[] = "GTMPGVQR"; // your network password (use for WPA)
 
 const size_t buffSize = 64;
 char buff[buffSize];
