@@ -113,7 +113,7 @@ void initial();
 
 void send(CAM_CMD cmd, uint8_t p1 = 0, uint8_t p2 = 0, uint8_t p3 = 0, uint8_t p4 = 0);
 long recv(CAM_CMD cmd, uint8_t option = 0);
-uint8_t* recvJPEG(long len);
+uint8_t* recvJPEG(long len, uint8_t* img);
 long getJPEG();
 void getRAW();
 

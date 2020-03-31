@@ -50,7 +50,8 @@ void initial()
 {
 	Serial.println("\nSetting.");
 	setBaudRate();
-	setImageFormat(COMP_JPEG, R640x480); //JPEG max resolution
+	//setImageFormat(COMP_JPEG, R640x480); //JPEG max resolution
+	setImageFormat(COMP_JPEG, R160x128);
 	setPackageSize(_packageSize);
 	//setImageFormat(RAW_16BIT_RGB565, R160x120);
 }
@@ -58,7 +59,7 @@ void initial()
 void send(CAM_CMD cmd, uint8_t p1, uint8_t p2, uint8_t p3, uint8_t p4)
 {
 	uint8_t buff[6] = { 0xAA, cmd, p1, p2, p3, p4 };
-	Serial.println("Sending: " + String(buff[1], HEX) +" "+ String(buff[2], HEX) + " " + String(buff[3], HEX) + " " + String(buff[4], HEX) + " " + String(buff[5], HEX));
+	//Serial.println("Sending: " + String(buff[1], HEX) +" "+ String(buff[2], HEX) + " " + String(buff[3], HEX) + " " + String(buff[4], HEX) + " " + String(buff[5], HEX));
 	Serial1.write(buff, 6);
 }
 
@@ -84,10 +85,10 @@ long recv(CAM_CMD cmd, uint8_t option)
 	return 0;
 }
 
-uint8_t* recvJPEG(long len)
+uint8_t* recvJPEG(long len, uint8_t* img)
 {
 	uint8_t buff[_packageSize];
-	uint8_t* img = new uint8_t(len);
+	//uint8_t* img = new uint8_t(len);
 	uint16_t id = 0;
 	uint16_t size = 0;
 	int count = len / (_packageSize - 6) + 1;
@@ -100,13 +101,11 @@ uint8_t* recvJPEG(long len)
 		size = buff[2] | buff[3] << 8;
 
 		Serial.println("Package " + String(id) + ", size " + String(size));
-		//for(int j = 0; j < size; j++)
-		//{
-		//	img[i*(_packageSize - 6) + j] = buff[j + 4];
-		//	Serial.print(buff[j+4]);
-		//	Serial.print(" ");
-		//}
-		//Serial.println();
+
+		for(int j = 0; j < size; j++)
+		{
+			img[i*(_packageSize - 6) + j] = buff[j + 4];
+		}
 
 		send(CMD_ACK, 0, 0, buff[0], buff[1]);
 	}
