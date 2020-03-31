@@ -24,8 +24,11 @@ MQTTClient MQTTc(256);
 //char ssid[] = "HAMKvisitor"; // your network SSID (name)
 //char pass[] = "hamkvisitor"; // your network password (use for WPA)
 
-char ssid[] = "TW-EAV510-BREAAA"; // your network SSID (name)
-char pass[] = "56410098"; // your network password (use for WPA)
+//char ssid[] = "TW-EAV510-BREAAA"; // your network SSID (name)
+//char pass[] = "56410098"; // your network password (use for WPA)
+
+char ssid[] = "Redmi"; // your network SSID (name)
+char pass[] = "smartfridge"; // your network password (use for WPA)
 
 const size_t buffSize = 64;
 char buff[buffSize];
@@ -67,6 +70,8 @@ void loop() {
 
 		MQTTc.publish("iot-2/evt/img-info/fmt/json", "{\"size\":" + String(len) + "}");
 		
+		//bin is the right way, but either IoT or MQTT is not able receive 0 in an array
+		/*
 		for (int i = len; i > 0; i -= buffSize) {
 			for (int j = 0; j < buffSize && j < i; ++j) {
 				buff[j] = *it;
@@ -74,11 +79,21 @@ void loop() {
 			}
 			MQTTc.publish("iot-2/evt/img-data/fmt/bin", buff);
 		}
+		*/
 
-		String data = String(img[0]);
-		for (int i = 1; i < 50; i++) data += "," + String(img[i]);
-		Serial.println(data);
-		//MQTTc.publish("iot-2/evt/imf/fmt/json", "{\"img\":[" + data + "]}");
+		//so lets make it in ungly json format
+		String data = "";
+		for (int i = len; i > 0; i -= buffSize/4) {
+			data = String(*it);
+			++it;
+			for (int i = 1; i < buffSize/4; i++) {
+				data += "," + String(img[i]);
+				++it;
+			}
+			Serial.println(data);
+			MQTTc.publish("iot-2/evt/img-data/fmt/json", "{\"img\":[" + data + "]}");
+		}
+		
 
 		delete(img);
 		get = false;
