@@ -28,7 +28,7 @@ char ssid[] = "UPC3421232"; // your network SSID (name)
 char pass[] = "GTMPGVQR"; // your network password (use for WPA)
 
 const size_t buffSize = 64;
-const size_t jsonSize = 16;
+const size_t jsonSize = 32;
 
 uint8_t img[4096];
 char buff[buffSize];
