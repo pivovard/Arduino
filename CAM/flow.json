@@ -1,0 +1,442 @@
+[
+    {
+        "id": "d27971e3.8d203",
+        "type": "tab",
+        "label": "CAM",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d70a07a1.4540c8",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 370,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ca27571.d55fda8",
+        "type": "ibmiot in",
+        "z": "d27971e3.8d203",
+        "authentication": "apiKey",
+        "apiKey": "f24d618.429a1a",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "CAM2",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": true,
+        "qos": 0,
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "d70a07a1.4540c8",
+                "8389f8f2.9778b8"
+            ]
+        ]
+    },
+    {
+        "id": "f8b2ca2.401ae38",
+        "type": "function",
+        "z": "d27971e3.8d203",
+        "name": "img-data",
+        "func": "var size = flow.get(\"size\");\nvar pack = flow.get(\"package\");\nvar data = flow.get(\"data\");\n\npack++;\nflow.set(\"package\", pack);\n\ndata = data.concat(msg.payload.data);\nflow.set(\"data\", data);\n\nif(pack*32 >= size){\n    var binData = Buffer.from(data);\n    return { payload: binData };\n}\nelse{\n    return null;\n}\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "a008c1bd.f442c",
+                "7790b96d.d56288",
+                "c9d2b1e0.2bc24"
+            ]
+        ]
+    },
+    {
+        "id": "9b533c0.19eedc8",
+        "type": "function",
+        "z": "d27971e3.8d203",
+        "name": "img-info",
+        "func": "flow.set(\"size\", msg.payload.size);\nflow.set(\"package\", 0);\nflow.set(\"data\", []);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 260,
+        "wires": [
+            [
+                "6edd03af.92f10c"
+            ]
+        ]
+    },
+    {
+        "id": "8389f8f2.9778b8",
+        "type": "switch",
+        "z": "d27971e3.8d203",
+        "name": "switch",
+        "property": "eventType",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "img-info",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "img-data",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "9b533c0.19eedc8"
+            ],
+            [
+                "f8b2ca2.401ae38"
+            ]
+        ]
+    },
+    {
+        "id": "a008c1bd.f442c",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 770,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "6edd03af.92f10c",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.size",
+        "targetType": "msg",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f25fc07c.4d1b9",
+        "type": "http request",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": false,
+        "url": "https://dummyimage.com/200x150/000/fff&text={{{payload}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 610,
+        "y": 720,
+        "wires": [
+            [
+                "b8c89dbd.1a91a",
+                "316a215f.bfbbfe",
+                "358629e5.226fe6"
+            ]
+        ]
+    },
+    {
+        "id": "77e1f4e1.b4c96c",
+        "type": "inject",
+        "z": "d27971e3.8d203",
+        "name": "Generate next image",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 720,
+        "wires": [
+            [
+                "1140f72a.ebc1e9"
+            ]
+        ]
+    },
+    {
+        "id": "1140f72a.ebc1e9",
+        "type": "function",
+        "z": "d27971e3.8d203",
+        "name": "image counter",
+        "func": "var count = flow.get(\"count\")||0;\n\ncount++;\n\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Image \" + count});\n\n// Save the new value back to context so it will be available next time\nflow.set('count',count);\n\n// Update the message payload and return - no need to create a new msg\nmsg.payload = \"Image \" + count;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 720,
+        "wires": [
+            [
+                "f25fc07c.4d1b9"
+            ]
+        ]
+    },
+    {
+        "id": "b8c89dbd.1a91a",
+        "type": "image",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "x": 800,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "c9d2b1e0.2bc24",
+        "type": "image",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "x": 780,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "316a215f.bfbbfe",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "cdbe0ff2.9b497",
+        "type": "http request",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": false,
+        "url": "https://dummyimage.com/200x150/000/fff&text={{{payload}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 610,
+        "y": 820,
+        "wires": [
+            [
+                "cbc85dd0.cf8fe"
+            ]
+        ]
+    },
+    {
+        "id": "bce92dca.ac533",
+        "type": "inject",
+        "z": "d27971e3.8d203",
+        "name": "Generate next image",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 820,
+        "wires": [
+            [
+                "9f6ccddc.d841f"
+            ]
+        ]
+    },
+    {
+        "id": "9f6ccddc.d841f",
+        "type": "function",
+        "z": "d27971e3.8d203",
+        "name": "image counter",
+        "func": "var count = flow.get(\"count\")||0;\n\ncount++;\n\nnode.status({fill:\"blue\",shape:\"ring\",text:\"Image \" + count});\n\n// Save the new value back to context so it will be available next time\nflow.set('count',count);\n\n// Update the message payload and return - no need to create a new msg\nmsg.payload = \"Image \" + count;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 820,
+        "wires": [
+            [
+                "cdbe0ff2.9b497"
+            ]
+        ]
+    },
+    {
+        "id": "cbc85dd0.cf8fe",
+        "type": "base64",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "action": "str",
+        "property": "payload",
+        "x": 780,
+        "y": 820,
+        "wires": [
+            [
+                "872b432a.a30e5",
+                "96455186.2d928"
+            ]
+        ]
+    },
+    {
+        "id": "872b432a.a30e5",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 950,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "96455186.2d928",
+        "type": "image",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": true,
+        "active": true,
+        "x": 960,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "7790b96d.d56288",
+        "type": "visual-recognition-v3",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "vr-service-endpoint": "https://api.kr-seo.visual-recognition.watson.cloud.ibm.com/instances/403922bc-48cc-43a7-8c7d-e17e9895a33f",
+        "image-feature": "classifyImage",
+        "lang": "en",
+        "x": 790,
+        "y": 320,
+        "wires": [
+            [
+                "2df4d045.f4999"
+            ]
+        ]
+    },
+    {
+        "id": "358629e5.226fe6",
+        "type": "visual-recognition-v3",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "vr-service-endpoint": "https://api.kr-seo.visual-recognition.watson.cloud.ibm.com/instances/403922bc-48cc-43a7-8c7d-e17e9895a33f",
+        "image-feature": "classifyImage",
+        "lang": "en",
+        "x": 810,
+        "y": 660,
+        "wires": [
+            [
+                "ee84b96d.3b0b28"
+            ]
+        ]
+    },
+    {
+        "id": "ee84b96d.3b0b28",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "result",
+        "targetType": "msg",
+        "x": 1010,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "2df4d045.f4999",
+        "type": "debug",
+        "z": "d27971e3.8d203",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "result",
+        "targetType": "msg",
+        "x": 990,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "85bf0f03.f9fba",
+        "type": "comment",
+        "z": "d27971e3.8d203",
+        "name": "Test",
+        "info": "",
+        "x": 150,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "f24d618.429a1a",
+        "type": "ibmiot",
+        "z": "",
+        "name": "CAM",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    }
+]
