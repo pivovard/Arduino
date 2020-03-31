@@ -85,7 +85,7 @@ long recv(CAM_CMD cmd, uint8_t option)
 	return 0;
 }
 
-uint8_t* recvJPEG(long len, uint8_t* img)
+uint8_t* recvJPEG(long len, uint8_t img[])
 {
 	uint8_t buff[_packageSize];
 	//uint8_t* img = new uint8_t(len);

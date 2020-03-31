@@ -1,2 +1,7 @@
 a-t434r5-eydzufkgpl
 *ZBXOsgzCnFRu5DC8I
+
+
+visual recognition:
+https://api.kr-seo.visual-recognition.watson.cloud.ibm.com/instances/403922bc-48cc-43a7-8c7d-e17e9895a33f
+EFI-9CvRSZe7ZBKBEuvoGmkUqMBn5--aR6mtxbXSde17

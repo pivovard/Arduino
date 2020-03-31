@@ -29,6 +29,8 @@ char pass[] = "GTMPGVQR"; // your network password (use for WPA)
 
 const size_t buffSize = 64;
 const size_t jsonSize = 16;
+
+uint8_t img[4096];
 char buff[buffSize];
 
 int button = 6;
@@ -64,16 +66,15 @@ void loop() {
 		long len = getJPEG();
 		if (len < 0) return;
 
-		uint8_t* img = new uint8_t(len);
+		//uint8_t* img = new uint8_t(len);
 		recvJPEG(len, img);
-		uint8_t* it = img;
 
 		Serial.println("Sending to IBM.");
-
 		MQTTc.publish("iot-2/evt/img-info/fmt/json", "{\"size\":" + String(len) + "}");
 		
 		//bin is the right way, but either IoT or MQTT is not able receive 0 in an array
 		/*
+		//uint8_t* it = img;
 		for (int i = len; i > 0; i -= buffSize) {
 			for (int j = 0; j < buffSize && j < i; ++j) {
 				buff[j] = *it;
@@ -86,22 +87,19 @@ void loop() {
 		//so lets make it in ungly json format - where stupid node-red receives only half of the data if they are too big
 		String data = "";
 		int pckg = 0;
-		for (int i = len; i > 0; i -= jsonSize) {
+		for (int i = 0; i < len; i += jsonSize) {
 			Serial.println("Sending pckg: " + String(pckg));
 			++pckg;
 
-			data = String(*it);
-			++it;
-			for (int j = 1; j < jsonSize && j < i; ++j) {
-				data += "," + String(*it);
-				++it;
+			data = String(img[i]);
+			for (int j = 1; j < jsonSize && (i+j) < len; ++j) {
+				data += "," + String(img[i+j]);
 			}
 			MQTTc.publish("iot-2/evt/img-data/fmt/json", "{\"pckg\":" + String(pckg) + ",\"data\":[" + data + "]}");
+			delay(2);
 		}
 
-		//delete(img);
 		get = false;
-
 		Serial.println("Done.");
 	}
 }
