@@ -1,9 +1,27 @@
-*74HC595     shift register
-74HC00N     NAND gate 4x
+1N4007		dioda
+
+IRF520		5V MOSFET
+
+74HC00(01)  4x NAND (open collector)
+74HC02 		4x NOR
+74HC04(05)	6x NOT (open collector)
+74HC08(09)	4x AND (open collector)
+74HC32(33)	4x OR  (open collector)
+74HC86		4x XOR
+
+74HCT74		2x klopny obvod
+74HC75		4bit register
+74HC175		4x klopny obvod
+*74HC595    shift register
+
 *MCP4821     D/A converter
-*LM158/LM258/LM358   OpAmp
+LM158/LM258/*LM358   OpAmp
 *LM380       audio power amplifier
+
 ESP8266     WiFi module
+ESP-32		WiFi + Bluetooth module
+NRF24
+RFM69
 ADXL345     accelerometer
 
 
