@@ -1,18 +1,22 @@
 1N4007		dioda
 
-IRF520		5V MOSFET
+*IRF510		2.5V MOSFET
+IRF520		5V   MOSFET
 
-74HC00(01)  4x NAND (open collector)
+*74HC00(01)  4x NAND (open collector)
 74HC02 		4x NOR
-74HC04(05)	6x NOT (open collector)
-74HC08(09)	4x AND (open collector)
-74HC32(33)	4x OR  (open collector)
-74HC86		4x XOR
+*74HC04(05)	6x NOT (open collector)
+*74HC08(09)	4x AND (open collector)
+*74HC32(33)	4x OR  (open collector)
+*74HC86		4x XOR
 
-74HCT74		2x klopny obvod
+*74HCT74		2x klopny obvod
 74HC75		4bit register
 74HC175		4x klopny obvod
+74LVT125	quad buffer
+
 *74HC595    shift register
+
 
 *MCP4821     D/A converter
 LM158/LM258/*LM358   OpAmp
@@ -20,9 +24,10 @@ LM158/LM258/*LM358   OpAmp
 
 ESP8266     WiFi module
 ESP-32		WiFi + Bluetooth module
+*HM-10		BLE
 NRF24
 RFM69
-ADXL345     accelerometer
+*ADXL345     accelerometer
 
 
 mikropajecka TS80/TS100
