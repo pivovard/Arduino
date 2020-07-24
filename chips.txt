@@ -1,32 +1,63 @@
 1N4007		dioda
+1N58%%		Shottky dioda
+*SS12		Shottky dioda (SMD)
 
-*IRF510		2.5V MOSFET
-IRF520		5V   MOSFET
+IRF4905STRLPBF	MOSFET
+*IRF510			MOSFET 2.5V
+IRF520		    MOSFET 5V
 
-*74HC00(01)  4x NAND (open collector)
+BSV52LT1G	NPN 12V, 0.1A
+
+TL2575		3.3V linear voltage regulator
+HT7533		3.3V linear voltage regulator
+7805		5V   linear voltage regulator
+
+
+ATMega328p-PU	classic
+ATMega328p-AU	SMD
+
+HC49/US			16MHz
+CSTCE16M0V53-R0	16Mhz + 22pF
+
+*74HC00(01) 4x NAND (open collector)
 74HC02 		4x NOR
 *74HC04(05)	6x NOT (open collector)
 *74HC08(09)	4x AND (open collector)
 *74HC32(33)	4x OR  (open collector)
 *74HC86		4x XOR
 
-*74HCT74		2x klopny obvod
+*74HCT74	2x klopny obvod
 74HC75		4bit register
 74HC175		4x klopny obvod
 74LVT125	quad buffer
 
 *74HC595    shift register
 
-
 *MCP4821     D/A converter
 LM158/LM258/*LM358   OpAmp
 *LM380       audio power amplifier
+LM393 (SMD)
+
+*****************************************************
+Modules:
+*****************************************************
+MCP23017	I2C GPIO
 
 ESP8266     WiFi module
 ESP-32		WiFi + Bluetooth module
-*HM-10		BLE
-NRF24
+
+HC-05		Bluetooth (SPP - seriova komunikace)
+HM-10		BLE	(SPP - seriova komunikace)
+*CC41-A		BLE (wrong firmware)
+RN-42		BLE (HID - ovladace, klavesnice)
+
+*NRF24
 RFM69
+
+*MFRC-522	RFID 13.56 MHz (old type tags)
+PN532		RFID 13.56 MHZ
+*RMD6300	RFID 125 kHz (read only)
+
 *ADXL345     accelerometer
 
 

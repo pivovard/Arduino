@@ -28,6 +28,8 @@
 #define __extension__
 #define __inline__
 #define __volatile__
+// Redefine __cplusplus to correct version: https://www.visualmicro.com/forums/YaBB.pl?num=1592217268
+#undef __cplusplus
 #define __cplusplus 201103L
 
 //#define GCC_VERSION 40902
@@ -86,6 +88,6 @@ typedef void *__builtin_va_list;
 #define pgm_read_float(address_short) float()
 #define pgm_read_ptr(address_short)   short()
 
-#include "ArdOsc.ino"
+#include "Sketch1.ino"
 #endif
 #endif
