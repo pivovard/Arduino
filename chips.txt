@@ -1,16 +1,21 @@
+10k			pull-up resistor
+
 1N4007		dioda
 1N58%%		Shottky dioda
 *SS12		Shottky dioda (SMD)
 
 IRF4905STRLPBF	MOSFET
-*IRF510			MOSFET 2.5V
+*IRF510			MOSFET 5V
 IRF520		    MOSFET 5V
+*BF998			MOSFET 3.3V (SMD)
 
 BSV52LT1G	NPN 12V, 0.1A
 
+*HT7533		3.3V linear voltage regulator
 TL2575		3.3V linear voltage regulator
-HT7533		3.3V linear voltage regulator
 7805		5V   linear voltage regulator
+
+MT3608		step-up
 
 
 ATMega328p-PU	classic
@@ -62,3 +67,5 @@ PN532		RFID 13.56 MHZ
 
 
 mikropajecka TS80/TS100
+mikroskop
+osciloskop
