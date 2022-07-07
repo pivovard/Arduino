@@ -2,21 +2,22 @@
 
 1N4007		dioda
 1N58%%		Shottky dioda
-*SS12		Shottky dioda (SMD)
+*SS12/16	Shottky dioda (SMD)
 
 IRF4905STRLPBF	MOSFET
 *IRF510			MOSFET 5V
 IRF520		    MOSFET 5V
 *BF998			MOSFET 3.3V (SMD)
+2N7000
 
 BSV52LT1G	NPN 12V, 0.1A
 
 *HT7533		3.3V linear voltage regulator
 TL2575		3.3V linear voltage regulator
 7805		5V   linear voltage regulator
-
 MT3608		step-up
 
+MAX232		seriovy prevodnik RS-232 (+-) <-> TTL (0/5V)
 
 ATMega328p-PU	classic
 ATMega328p-AU	SMD
@@ -34,7 +35,7 @@ CSTCE16M0V53-R0	16Mhz + 22pF
 *74HCT74	2x klopny obvod
 74HC75		4bit register
 74HC175		4x klopny obvod
-74LVT125	quad buffer
+74LVT125	4x buffer (5V <-> 3.3V)
 
 *74HC595    shift register
 
@@ -67,5 +68,3 @@ PN532		RFID 13.56 MHZ
 
 
 mikropajecka TS80/TS100
-mikroskop
-osciloskop
